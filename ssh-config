@@ -1,0 +1,37 @@
+Host caen
+		HostName oncampus-course.engin.umich.edu
+		User egajda
+    ControlMaster auto
+    ControlPath ~/.ssh/CAEN
+    ControlPersist 43200
+Host remote_caen
+		HostName login-course.engin.umich.edu
+		User egajda
+    ControlMaster auto
+    ControlPath ~/.ssh/CAEN
+    ControlPersist 43200
+Host igv
+		HostName 104.236.71.106
+		User overlord
+Host op-igv
+		HostName 159.89.116.198
+		User open
+Host maav
+		HostName 35.169.23.107
+		User ubuntu
+		IdentityFile ~/.ssh/webserver.pem
+Host lofti
+    HostName 127.0.0.1
+    User vagrant
+    Port 2222
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+    PasswordAuthentication no
+    IdentityFile ~/Lofti-Web/.vagrant/machines/lofti/virtualbox/private_key
+    IdentitiesOnly yes
+    LogLevel FATAL
+Host aoba
+    HostName aoba.maavumich.org
+    Port 22
+    User egajda
+    IdentityFile ~/.ssh/id_rsa

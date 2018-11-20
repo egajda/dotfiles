@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+set -e
+
+home=$(cd && pwd)
+cwd=$(pwd)
+
+mkdir -p ~/.config
+
+sudo="sudo"
+if [ -f /.dockerenv ]; then
+  sudo=""
+fi
+
+command_exists () {
+  type "$1" &> /dev/null ;
+}
+
+create_symlinks() {
+  dotfiles="$home/dotfiles"
+  if [ ! -e "$dotfiles" ]; then
+    git clone https://github.com/egajda/dotfiles "$dotfiles"
+  fi
+
+  symlink_to_home() {
+    from="$dotfiles/$1"
+    to="${2:-$HOME/.$1}"
+    if [ ! -e "$to" ]; then
+      ln -sv "$from" "$to"
+    fi
+  }
+
+  symlink_dir_to_home() {
+    from="$dotfiles/$1"
+    to="${2:-$HOME/.$1}"
+    if [ ! -e "$to" ]; then
+      ln -svn "$from" "$to"
+    fi
+  }
+
+  symlink_to_home bashrc
+  symlink_to_home elinks
+  symlink_to_home tmux.conf
+
+  mkdir -p ~/.config/omf
+  symlink_dir_to_home config/omf/bundle ~/.config/omf/bundle
+  symlink_dir_to_home ssh-config ~/.ssh/config
+}
+
+create_symlinks
